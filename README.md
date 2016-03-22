@@ -1,5 +1,8 @@
 [![Build Status](https://travis-ci.org/darthtrevino/savey-wavey.svg?branch=master)](https://travis-ci.org/darthtrevino/savey-wavey)
 [![Dependencies](https://david-dm.org/darthtrevino/savey-wavey.svg)](https://david-dm.org/darthtrevino/savey-wavey)
+[![Code Climate](https://codeclimate.com/github/darthtrevino/savey-wavey/badges/gpa.svg)](https://codeclimate.com/github/darthtrevino/savey-wavey)
+[![Test Coverage](https://codeclimate.com/github/darthtrevino/savey-wavey/badges/coverage.svg)](https://codeclimate.com/github/darthtrevino/savey-wavey/coverage)
+[![Issue Count](https://codeclimate.com/github/darthtrevino/savey-wavey/badges/issue_count.svg)](https://codeclimate.com/github/darthtrevino/savey-wavey)
 
 # savey-wavey
 

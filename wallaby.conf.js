@@ -1,14 +1,14 @@
 module.exports = function getWallabyConfiguration() {
   return {
     files: [
-      'src/**/*.ts',
+      'src/**/*.ts'
     ],
     tests: [
-      'test/**/*.spec.ts',
+      'test/**/*.spec.ts'
     ],
     env: {
       type: 'node',
-      runer: 'node',
-    },
+      runer: 'node'
+    }
   };
 };
