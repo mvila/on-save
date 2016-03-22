@@ -1,0 +1,18 @@
+{
+  "ambientDependencies": {
+    "atom": "registry:dt/atom#0.0.0+20160317120654",
+    "chai": "registry:dt/chai#3.4.0+20160317120654",
+    "emissary": "registry:dt/emissary#0.0.0+20160317120654",
+    "jquery": "registry:dt/jquery#1.10.0+20160316155526",
+    "minimatch": "registry:dt/minimatch#2.0.8+20160317120654",
+    "mixto": "registry:dt/mixto#0.0.0+20160317120654",
+    "mkdirp": "registry:dt/mkdirp#0.3.0+20160317120654",
+    "mocha": "registry:dt/mocha#2.2.5+20160317120654",
+    "node": "registry:dt/node#4.0.0+20160319033040",
+    "pathwatcher": "registry:dt/pathwatcher#0.0.0+20160317120654",
+    "q": "registry:dt/q#0.0.0+20160317120654",
+    "space-pen": "registry:dt/space-pen#0.0.0+20160316155526",
+    "status-bar": "registry:dt/status-bar#0.0.0+20160317120654",
+    "text-buffer": "registry:dt/text-buffer#0.0.0+20160317120654"
+  }
+}

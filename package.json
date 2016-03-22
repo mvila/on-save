@@ -1,7 +1,7 @@
 {
-  "name": "on-save",
-  "version": "0.2.9",
-  "description": "Run a shell command when you save a file",
+  "name": "savey-wavey",
+  "version": "0.1.0",
+  "description": "Execute shell commands on save",
   "keywords": [
     "save",
     "file",
@@ -15,13 +15,27 @@
     "execute",
     "shell"
   ],
-  "repository": "https://github.com/mvila/on-save",
+  "scripts": {
+    "postinstall": "typings install",
+    "tsc": "tsc",
+    "test": "tsc && mocha test/**/*.spec.js"
+  },
+  "main": "src/index.js",
+  "repository": "https://github.com/darthtrevino/savey-wavey",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
   "dependencies": {
+    "debug": "^2.2.0",
     "minimatch": "^3.0.0",
     "mkdirp": "^0.5.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5",
+    "tslint": "^3.6.0",
+    "typescript": "^1.8.9",
+    "typings": "^0.7.9"
   }
 }
