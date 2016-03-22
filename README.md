@@ -19,6 +19,7 @@ For example, if you want to babelify every `.js` file from `src` to `lib`:
   ],
   "config": <optional configuration options>
 }
+```
 
 ### Interpolated Variables
 Example: `/Users/me/projects/domination/src/stuff/x.js`
