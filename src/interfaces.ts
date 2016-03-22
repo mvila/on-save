@@ -10,7 +10,7 @@ export interface ISaveCommand {
   /**
    * The file basepath
    */
-  basePath: string;
+  baseDir: string;
 
   /**
    * The command to execute when files change.

@@ -24,7 +24,7 @@ export default class CommandRunner {
         const fileExt = path.extname(filePath);
         const fileBase = path.basename(filePath, fileExt);
         const fileDir = path.dirname(filePath);
-        const relativeRoot = command.basePath ? path.join(rootPath, command.basePath) : rootPath;
+        const relativeRoot = command.baseDir ? path.join(rootPath, command.baseDir) : rootPath;
         const fileDirRelativeToBase = path.relative(relativeRoot, path.join(rootPath, fileDir));
         const commandArguments = {
             filePath,
