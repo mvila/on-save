@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/darthtrevino/savey-wavey.svg?branch=master)](https://travis-ci.org/darthtrevino/savey-wavey)
+[![Dependencies](https://david-dm.org/darthtrevino/savey-wavey.svg)](https://david-dm.org/darthtrevino/savey-wavey)
 
 # savey-wavey
 
