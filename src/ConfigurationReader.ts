@@ -23,10 +23,10 @@ export default class ConfigurationReader {
 
   private readCommandsFromFile(filePath: string): IConfigFile {
     const configuration = this.readFileContents(filePath);
-    configuration.commands.map(({files, command, baseDir}) => {
-      if (!files) throw new Error('savey-wavey:: \'files\' property is missing in \'.savey-wavey:.json\' configuration file');
+    configuration.commands.map(({watch, command, base}) => {
+      if (!watch) throw new Error('savey-wavey:: \'watch\' property is missing in \'.savey-wavey:.json\' configuration file');
       if (!command) throw new Error('savey-wavey:: \'command\' property is missing in \'.savey-wavey:.json\' configuration file');
-      return { files, command, baseDir };
+      return { watch, command, base };
     });
     return configuration;
   }

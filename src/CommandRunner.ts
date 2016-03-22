@@ -17,19 +17,19 @@ export default class CommandRunner {
         this.executeShellCommand(resolved, config, { cwd: rootPath, timeout: EXEC_TIMEOUT });
     }
 
-    private getCommandArguments(command: ISaveCommand, rootPath: string, filePath: string) {
-      const fileExt = path.extname(filePath);
-      const fileBase = path.basename(filePath, fileExt);
-      const fileDir = path.dirname(filePath);
-      const relativeRoot = command.baseDir ? path.join(rootPath, command.baseDir) : rootPath;
-      const fileDirRelativeToBase = path.relative(relativeRoot, path.join(rootPath, fileDir));
+    private getCommandArguments(command: ISaveCommand, project: string, filePath: string) {
+      const ext = path.extname(filePath);
+      const name = path.basename(filePath, ext);
+      const dirRoot = command.base ? path.join(project, command.base) : project;
+      const dir = path.relative(dirRoot, path.join(project, path.dirname(filePath)));
+      const absPath = path.join(project, filePath);
       return {
-          filePath,
-          rootPath,
-          fileExt,
-          fileBase,
-          fileDir,
-          fileDirRelativeToBase
+          project, // Project root directory
+          path_abs: absPath, // The absolute path of the changed file
+          path: filePath, // The path of the changed file relative to the project
+          ext, // The file extension
+          name, // The filename without the extension
+          dir: (dir === "" ? "." : dir), // The directory of the changed file relative to the command base or the project root
       };
     }
 

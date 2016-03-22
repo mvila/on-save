@@ -15,8 +15,8 @@ For example, if you want to babelify every `.js` file from `src` to `lib`:
 {
   "commands": [
     {
-      "files": "src/**/*.js",
-      "baseDir": "src",
+      "watch": "src/**/*.js",
+      "base": "src",
       "command": "./node_modules/.bin/babel ${filePath} --out-file libs/${fileDirRelativeToBase}/${fileBase}.js"
     }
   ],
@@ -25,13 +25,14 @@ For example, if you want to babelify every `.js` file from `src` to `lib`:
 ```
 
 ### Interpolated Variables
-Example: `/Users/me/projects/domination/src/stuff/x.js`
-* **filePath**: The path of the file relative to your project. (e.g. `src/stuff/x.js`)
-* **rootPath**: The root path of the project (e.g. `/Users/me/projects/domination`)
-* **fileExt**: The extension of the changed file: (e.g. `.js`)
-* **fileBase**: The filename base of the changed file: (e.g. `x`)
-* **fileDir**: The directory of the file relative to the project root (e.g. `src/stuff`)
-* **fileDirRelativeToBase**: The directory of the file relative to either the baseDir option or the rootPath if no baseDir option is present (e.g. `stuff`)
+Example: `/Users/me/projects/domination/src/widgets/x.js`
+
+* **project**: The root path of the project (e.g. `/Users/me/projects/domination`)
+* **path**: The path of the file relative to your project. (e.g. `src/widgets/x.js`)
+* **path_abs**: The absolute path of the changed file (e.g. `/Users/me/projects/domination/src/widgets/x.js`)
+* **ext**: The extension of the changed file: (e.g. `.js`)
+* **name**: The base filename, without extension, of the changed file: (e.g. `x`)
+* **dir**: The directory of the file relative to either the baseDir option or the rootPath if no baseDir option is present (e.g. `stuff`)
 
 ### Configuration Options
 ```javascript

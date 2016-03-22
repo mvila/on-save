@@ -5,12 +5,12 @@ export interface ISaveCommand {
   /**
    * The glob containing the files to watch.
    */
-  files: string;
+  watch: string;
 
   /**
    * The file basepath
    */
-  baseDir: string;
+  base: string;
 
   /**
    * The command to execute when files change.
