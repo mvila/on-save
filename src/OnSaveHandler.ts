@@ -4,7 +4,7 @@ import { ISaveCommand } from "./interfaces";
 import ConfigurationReader from "./ConfigurationReader";
 import CommandMatcher from "./CommandMatcher";
 import CommandRunner from "./CommandRunner";
-// TODO: Use TS Imports when Atom Typings are completeq
+// TODO: Use TS Imports when Atom Typings are complete
 const { CompositeDisposable } = require("atom");
 
 export default class OnSaveHandler {
