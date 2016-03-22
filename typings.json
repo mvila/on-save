@@ -14,5 +14,8 @@
     "space-pen": "registry:dt/space-pen#0.0.0+20160316155526",
     "status-bar": "registry:dt/status-bar#0.0.0+20160317120654",
     "text-buffer": "registry:dt/text-buffer#0.0.0+20160317120654"
+  },
+  "dependencies": {
+    "bluebird": "registry:npm/bluebird#3.2.1+20160211005852"
   }
 }

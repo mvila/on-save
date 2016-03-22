@@ -4,16 +4,24 @@ import { ISaveCommand } from "./interfaces";
 import ConfigurationReader from "./ConfigurationReader";
 import CommandMatcher from "./CommandMatcher";
 import CommandRunner from "./CommandRunner";
+import FeedbackEmitter from "./FeedbackEmitter";
+
 // TODO: Use TS Imports when Atom Typings are complete
 const { CompositeDisposable } = require("atom");
 
 export default class OnSaveHandler {
     private subscriptions: any;
+    private _statusBar: StatusBar.IStatusBarView;
 
     constructor(
         private _configurationReader: ConfigurationReader,
         private _commandMatcher: CommandMatcher,
-        private _commandRunner: CommandRunner) {
+        private _commandRunner: CommandRunner,
+        private _feedbackEmitter: FeedbackEmitter) {
+    }
+
+    public consumeStatusBar(sb: StatusBar.IStatusBarView) {
+      this._feedbackEmitter.statusBar = sb;
     }
 
     public activate() {
@@ -34,8 +42,10 @@ export default class OnSaveHandler {
             const savedFilePath = path.relative(projectPath, eventPath);
             const config = this._configurationReader.readConfiguration(projectPath);
             config.commands.forEach(command => {
-              if (this._commandMatcher.isApplicable(command, projectPath, savedFilePath)) {
-                this._commandRunner.run(command, config.config, projectPath, savedFilePath);
+              const isApplicable = this._commandMatcher.isApplicable(command, projectPath, savedFilePath);
+              if (isApplicable) {
+                this._commandRunner.run(command, config.config, projectPath, savedFilePath)
+                .then(result => this._feedbackEmitter.onResult(result, config.config));
               }
             });
         }

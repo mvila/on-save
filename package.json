@@ -16,8 +16,14 @@
     "shell"
   ],
   "contributors": [
-    { "name": "Chris Trevino", "url": "www.github.com/darthtrevino" },
-    { "name": "Manuel Vila", "url": "https://github.com/mvila"}
+    {
+      "name": "Chris Trevino",
+      "url": "www.github.com/darthtrevino"
+    },
+    {
+      "name": "Manuel Vila",
+      "url": "https://github.com/mvila"
+    }
   ],
   "scripts": {
     "postinstall": "typings install && tsc",
@@ -33,6 +39,7 @@
   },
   "dependencies": {
     "atom-message-panel": "^1.2.4",
+    "bluebird": "^3.3.4",
     "debug": "^2.2.0",
     "lodash": "^4.6.1",
     "minimatch": "^3.0.0",
@@ -43,5 +50,12 @@
     "chai": "^3.5.0",
     "mocha": "^2.4.5",
     "tslint": "^3.6.0"
+  },
+  "consumedServices": {
+    "status-bar": {
+      "versions": {
+        "^1.0.0": "consumeStatusBar"
+      }
+    }
   }
 }
