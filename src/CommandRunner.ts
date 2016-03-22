@@ -2,7 +2,6 @@ import * as path from "path";
 import { ISaveCommand, IConfiguration } from "./interfaces";
 import CommandResolver from "./CommandResolver";
 const PlainMessageView = require('atom-message-panel').PlainMessageView;
-const atom = global['atom'];
 const { exec } = require("child_process");
 const EXEC_TIMEOUT = 60 * 1000; // 1 minute
 

@@ -2,8 +2,9 @@
 
 # savey-wavey
 
-An atom plugin for triggering shell scripts on save events.
+`apm install savey-wavey`
 
+An atom plugin for triggering shell scripts on save events.
 
 ## Usage
 Create an `.on-save.json` file at the root of you project.
