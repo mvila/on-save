@@ -6,7 +6,7 @@ describe("The CommandMatcher", () => {
 
   it("can determine if a command will apply to a file", () => {
       const result = matcher.isApplicable({
-        files: "src/**/*.js",
+        watch: "src/**/*.js",
         command: "",
         base: ""
       }, "/Users/darthtrevino/projects/x", "src/api/thing.js");
