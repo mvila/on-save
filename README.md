@@ -17,7 +17,7 @@ For example, if you want to babelify every `.js` file from `src` to `lib`:
     {
       "watch": "src/**/*.js",
       "base": "src",
-      "command": "./node_modules/.bin/babel ${filePath} --out-file libs/${fileDirRelativeToBase}/${fileBase}.js"
+      "command": "./node_modules/.bin/babel ${path} --out-file libs/${dir}/${name}.js"
     }
   ],
   "config": <optional configuration options>
