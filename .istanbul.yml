@@ -1,0 +1,6 @@
+instrumentation:
+    excludes: [
+      'wallaby.conf.js',
+      'test/**',
+    ]
+    include-all-sources: true
