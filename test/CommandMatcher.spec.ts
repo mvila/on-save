@@ -8,6 +8,7 @@ describe("The CommandMatcher", () => {
       const result = matcher.isApplicable({
         files: "src/**/*.js",
         command: "",
+        baseDir: ""
       }, "/Users/darthtrevino/projects/x", "src/api/thing.js");
       expect(result).to.be.true;
   });

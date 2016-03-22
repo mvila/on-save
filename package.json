@@ -1,6 +1,6 @@
 {
   "name": "savey-wavey",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Execute shell commands on save",
   "keywords": [
     "save",
@@ -16,9 +16,7 @@
     "shell"
   ],
   "scripts": {
-    "postinstall": "typings install",
-    "tsc": "tsc",
-    "test": "tsc && mocha test/**/*.spec.js"
+    "test": "typings install && tsc && mocha test/**/*.spec.js"
   },
   "main": "index.js",
   "repository": {
