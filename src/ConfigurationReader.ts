@@ -4,7 +4,7 @@ import * as _ from "lodash";
 
 import { IConfigFile, IConfiguration } from "./interfaces";
 const log = require("debug")("savey-wavey::ConfigurationReader");
-const CONFIGS_FILENAME = '.on-save.json';
+const CONFIGS_FILENAME = ".on-save.json";
 
 const DEFAULT_CONFIG = {
   showSuccess: true,
@@ -24,8 +24,12 @@ export default class ConfigurationReader {
   private readCommandsFromFile(filePath: string): IConfigFile {
     const configuration = this.readFileContents(filePath);
     configuration.commands.map(({watch, command, base}) => {
-      if (!watch) throw new Error('savey-wavey:: \'watch\' property is missing in \'.savey-wavey:.json\' configuration file');
-      if (!command) throw new Error('savey-wavey:: \'command\' property is missing in \'.savey-wavey:.json\' configuration file');
+      if (!watch) {
+        throw new Error("savey-wavey:: 'watch' property is missing in configuration file");
+      }
+      if (!command) {
+        throw new Error("savey-wavey:: 'command' property is missing in configuration file");
+      }
       return { watch, command, base };
     });
     return configuration;
@@ -33,7 +37,7 @@ export default class ConfigurationReader {
 
   private readFileContents(filePath: string): IConfigFile {
     try {
-      const contents = fs.readFileSync(filePath, 'utf8');
+      const contents = fs.readFileSync(filePath, "utf8");
       return JSON.parse(contents);
     } catch (err) {
       console.error("savey-wavey: error reading configuration", err);

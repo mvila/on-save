@@ -1,4 +1,4 @@
-import CommandResolver from "../src/CommandResolver";;
+import CommandResolver from "../src/CommandResolver";
 import { expect } from "chai";
 
 describe("The Command Resolver", () => {

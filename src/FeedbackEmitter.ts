@@ -1,6 +1,6 @@
 import { IConfiguration } from "./interfaces";
 import { IExecutionResult } from "./CommandRunner";
-const PlainMessageView = require('atom-message-panel').PlainMessageView;
+const PlainMessageView = require("atom-message-panel").PlainMessageView;
 
 export default class FeedbackEmitter {
     private _statusBar: StatusBar.IStatusBarView;

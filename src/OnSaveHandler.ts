@@ -1,5 +1,5 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from "fs";
+import * as path from "path";
 import { ISaveCommand } from "./interfaces";
 import ConfigurationReader from "./ConfigurationReader";
 import CommandMatcher from "./CommandMatcher";
@@ -52,7 +52,7 @@ export default class OnSaveHandler {
     }
 
     private getProjectPath(eventPath): string {
-        const dir = atom.project.rootDirectories['find'](dir => dir.contains(eventPath));
+        const dir = atom.project.rootDirectories["find"](rootDir => rootDir.contains(eventPath));
         return dir ? dir.path : null;
     }
 }

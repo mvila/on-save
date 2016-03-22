@@ -26,5 +26,5 @@ export interface IConfiguration {
 
 export interface IConfigFile {
   commands: ISaveCommand[];
-  config: IConfiguration
+  config: IConfiguration;
 };
