@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { ISaveCommand } from "./interfaces";
 import ConfigurationReader from "./ConfigurationReader";
+import CommandMatcher from "./CommandMatcher";
 import CommandRunner from "./CommandRunner";
 // TODO: Use TS Imports when Atom Typings are completeq
 const { CompositeDisposable } = require("atom");
@@ -11,6 +12,7 @@ export default class OnSaveHandler {
 
     constructor(
         private _configurationReader: ConfigurationReader,
+        private _commandMatcher: CommandMatcher,
         private _commandRunner: CommandRunner) {
     }
 
@@ -31,7 +33,11 @@ export default class OnSaveHandler {
         if (projectPath) {
             const savedFilePath = path.relative(projectPath, eventPath);
             const config = this._configurationReader.readConfiguration(projectPath);
-            config.commands.forEach(command => this._commandRunner.run(command, config.config, projectPath, savedFilePath));
+            config.commands.forEach(command => {
+              if (this._commandMatcher.isApplicable(command, projectPath, savedFilePath)) {
+                this._commandRunner.run(command, config.config, projectPath, savedFilePath);
+              }
+            });
         }
     }
 

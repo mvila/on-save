@@ -7,9 +7,9 @@ const MessagePanelView = require('atom-message-panel').MessagePanelView;
 
 const onSaveModule = new OnSaveHandler(
   new ConfigurationReader(),
+  new CommandMatcher(),
   new CommandRunner(
     new CommandResolver(),
-    new CommandMatcher(),
     new MessagePanelView({ title: "Save Scripts", recentMessagesAtTop: true, maxHeight: 100 })
   )
 );
