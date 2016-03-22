@@ -29,7 +29,8 @@
     "postinstall": "typings install && tsc",
     "lint": "tslint -c tslint.json src/*.ts test/*.ts",
     "mocha": "istanbul test _mocha -- 'test/**/*.spec.js'",
-    "test": "npm run lint && npm run mocha --coverage"
+    "report-coverage": "codeclimate-test-reporter < coverage/lcov.info",
+    "test": "npm run lint && npm run mocha --coverage && npm run report-coverage"
   },
   "main": "index.js",
   "repository": {
@@ -50,6 +51,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "codeclimate-test-reporter": "^0.3.1",
     "istanbul": "^0.4.2",
     "mocha": "^2.4.5",
     "tslint": "^3.6.0"
