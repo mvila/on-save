@@ -7,7 +7,6 @@
     "lodash": "registry:dt/lodash#3.10.0+20160319050323",
     "minimatch": "registry:dt/minimatch#2.0.8+20160317120654",
     "mixto": "registry:dt/mixto#0.0.0+20160317120654",
-    "mkdirp": "registry:dt/mkdirp#0.3.0+20160317120654",
     "mocha": "registry:dt/mocha#2.2.5+20160317120654",
     "node": "registry:dt/node#4.0.0+20160319033040",
     "pathwatcher": "registry:dt/pathwatcher#0.0.0+20160317120654",
