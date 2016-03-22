@@ -1,6 +1,6 @@
 # savey-wavey
 
-An save-event scripting plugin. Forked from https://github.com/mvila/on-save
+An atom plugin for triggering shell scripts on save events. Forked from https://github.com/mvila/on-save
 
 
 ## Usage
