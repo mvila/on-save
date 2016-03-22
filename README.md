@@ -1,6 +1,8 @@
+[![Build Status](https://travis-ci.org/darthtrevino/savey-wavey.svg?branch=master)](https://travis-ci.org/darthtrevino/savey-wavey)
+
 # savey-wavey
 
-An atom plugin for triggering shell scripts on save events. Forked from https://github.com/mvila/on-save
+An atom plugin for triggering shell scripts on save events.
 
 
 ## Usage

@@ -15,6 +15,10 @@
     "execute",
     "shell"
   ],
+  "contributors": [
+    { "name": "Chris Trevino", "url": "www.github.com/darthtrevino" },
+    { "name": "Manuel Vila", "url": "https://github.com/mvila"}
+  ],
   "scripts": {
     "postinstall": "typings install && tsc",
     "test": "mocha test/**/*.spec.js"
