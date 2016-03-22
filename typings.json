@@ -4,6 +4,7 @@
     "chai": "registry:dt/chai#3.4.0+20160317120654",
     "emissary": "registry:dt/emissary#0.0.0+20160317120654",
     "jquery": "registry:dt/jquery#1.10.0+20160316155526",
+    "lodash": "registry:dt/lodash#3.10.0+20160319050323",
     "minimatch": "registry:dt/minimatch#2.0.8+20160317120654",
     "mixto": "registry:dt/mixto#0.0.0+20160317120654",
     "mkdirp": "registry:dt/mkdirp#0.3.0+20160317120654",

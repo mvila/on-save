@@ -20,14 +20,18 @@
     "tsc": "tsc",
     "test": "tsc && mocha test/**/*.spec.js"
   },
-  "main": "src/index.js",
-  "repository": "https://github.com/darthtrevino/savey-wavey",
+  "main": "index.js",
+  "repository": {
+    "url": "https://github.com/darthtrevino/savey-wavey"
+  },
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
   "dependencies": {
+    "atom-message-panel": "^1.2.4",
     "debug": "^2.2.0",
+    "lodash": "^4.6.1",
     "minimatch": "^3.0.0",
     "mkdirp": "^0.5.1"
   },

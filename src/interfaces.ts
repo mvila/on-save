@@ -3,20 +3,28 @@
  */
 export interface ISaveCommand {
   /**
-   The glob containing the files to watch.
+   * The glob containing the files to watch.
    */
   files: string;
 
   /**
-  The command to execute when files change.
-  */
+   * The file basepath
+   */
+  basePath: string;
+
+  /**
+   * The command to execute when files change.
+   */
   command: string;
 }
 
-/**
- * TODO: Remove when Atom's typings get better
- */
-export interface ICompositeDisposable {
-  add(any);
-  dispose();
+export interface IConfiguration {
+  showSuccess: boolean;
+  autohideSuccess: boolean;
+  autohideSuccessTimeout: number;
 }
+
+export interface IConfigFile {
+  commands: ISaveCommand[];
+  config: IConfiguration
+};
