@@ -1,15 +1,12 @@
 import OnSaveHandler from "./src/OnSaveHandler";
-import ConfigurationReader from "./src/ConfigurationReader";
-import CommandRunner from "./src/CommandRunner";
-import CommandResolver from "./src/CommandResolver";
-import CommandMatcher from "./src/CommandMatcher";
-import FeedbackEmitter from "./src/FeedbackEmitter";
+import ConfigurationReader from "./src/configuration/ConfigurationReader";
+import CommandRunner from "./src/execution/CommandRunner";
+import FeedbackEmitter from "./src/feedback/FeedbackEmitter";
 const MessagePanelView = require('atom-message-panel').MessagePanelView;
 
 const onSaveModule = new OnSaveHandler(
   new ConfigurationReader(),
-  new CommandMatcher(),
-  new CommandRunner(new CommandResolver()),
+  new CommandRunner(),
   new FeedbackEmitter(new MessagePanelView({ title: "Save Scripts", recentMessagesAtTop: true, maxHeight: 100 }))
 );
 module.exports = onSaveModule;

@@ -1,27 +1,32 @@
 import * as fs from "fs";
 import * as path from "path";
-import { ISaveCommand } from "./interfaces";
-import ConfigurationReader from "./ConfigurationReader";
-import CommandMatcher from "./CommandMatcher";
-import CommandRunner from "./CommandRunner";
-import FeedbackEmitter from "./FeedbackEmitter";
+import {
+    ISaveCommand,
+    IConfiguration,
+    IPluginConfiguration,
+    IConfigurationReader
+} from "./configuration/interfaces";
+import { ICommandRunner } from "./execution/interfaces";
+import { IFeedbackEmitter } from "./feedback/interfaces";
 
 // TODO: Use TS Imports when Atom Typings are complete
 const { CompositeDisposable } = require("atom");
+
+const CONFIGS_FILENAME = ".on-save.json";
 
 export default class OnSaveHandler {
     private subscriptions: any;
     private _statusBar: StatusBar.IStatusBarView;
 
     constructor(
-        private _configurationReader: ConfigurationReader,
-        private _commandMatcher: CommandMatcher,
-        private _commandRunner: CommandRunner,
-        private _feedbackEmitter: FeedbackEmitter) {
+        private _configurationReader: IConfigurationReader,
+        private _commandRunner: ICommandRunner,
+        private _feedbackEmitter: IFeedbackEmitter) {
     }
 
     public consumeStatusBar(sb: StatusBar.IStatusBarView) {
-      this._feedbackEmitter.statusBar = sb;
+        // TODO:
+        // If a save task exists, show an icon with a green check to indicate the save task status.
     }
 
     public activate() {
@@ -37,18 +42,23 @@ export default class OnSaveHandler {
 
     private handleDidSave(event) {
         const eventPath = event.path;
-        const projectPath = this.getProjectPath(eventPath);
-        if (projectPath) {
-            const savedFilePath = path.relative(projectPath, eventPath);
-            const config = this._configurationReader.readConfiguration(projectPath);
-            config.commands.forEach(command => {
-              const isApplicable = this._commandMatcher.isApplicable(command, projectPath, savedFilePath);
-              if (isApplicable) {
-                this._commandRunner.run(command, config.config, projectPath, savedFilePath)
-                .then(result => this._feedbackEmitter.onResult(result, config.config));
-              }
-            });
+        const project = this.getProjectPath(eventPath);
+        if (project) {
+            const file = path.relative(project, eventPath);
+            const config = this.readConfiguration(project);
+            const commands = config.getCommandsApplicableToFile(file);
+            commands.forEach(command => this.execute(command, config.config, project, file))
         }
+    }
+
+    private execute(command: ISaveCommand, config: IPluginConfiguration, project: string, file: string) {
+        return this._commandRunner.run(command, project, file)
+            .then(result => this._feedbackEmitter.onResult(result, config));
+    }
+
+    private readConfiguration(projectPath: string): IConfiguration {
+        const filePath = path.join(projectPath, CONFIGS_FILENAME);
+        return this._configurationReader.readConfiguration(filePath);
     }
 
     private getProjectPath(eventPath): string {

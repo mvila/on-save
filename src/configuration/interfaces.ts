@@ -16,15 +16,26 @@ export interface ISaveCommand {
    * The command to execute when files change.
    */
   command: string;
+
+  /**
+   * Determines whether this save command applies to a file
+   */
+  appliesTo(file: string): boolean;
 }
 
-export interface IConfiguration {
+export interface IPluginConfiguration {
   showSuccess: boolean;
   autohideSuccess: boolean;
   autohideSuccessTimeout: number;
 }
 
-export interface IConfigFile {
+export interface IConfiguration {
   commands: ISaveCommand[];
-  config: IConfiguration;
-};
+  config: IPluginConfiguration;
+
+  getCommandsApplicableToFile(file: string): ISaveCommand[];
+}
+
+export interface IConfigurationReader {
+  readConfiguration(file: string): IConfiguration;
+}

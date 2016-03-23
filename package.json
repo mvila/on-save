@@ -27,7 +27,7 @@
   ],
   "scripts": {
     "postinstall": "typings install && tsc",
-    "lint": "tslint -c tslint.json src/*.ts test/*.ts",
+    "lint": "tslint -c tslint.json src/**/*.ts test/**/*.ts",
     "mocha": "istanbul test _mocha -- 'test/**/*.spec.js'",
     "report-coverage": "codeclimate-test-reporter < coverage/lcov.info",
     "test": "npm run lint && npm run mocha --coverage && npm run report-coverage"

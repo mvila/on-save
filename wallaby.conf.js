@@ -1,7 +1,8 @@
 module.exports = function getWallabyConfiguration() {
   return {
     files: [
-      'src/**/*.ts'
+      'src/**/*.ts',
+      'test/**/*.json'
     ],
     tests: [
       'test/**/*.spec.ts'

@@ -1,25 +1,21 @@
-import { IConfiguration } from "./interfaces";
-import { IExecutionResult } from "./CommandRunner";
+import { IPluginConfiguration } from "../configuration/interfaces";
+import { IExecutionResult } from "../execution/interfaces";
+import { IFeedbackEmitter } from "./interfaces";
 const PlainMessageView = require("atom-message-panel").PlainMessageView;
 
-export default class FeedbackEmitter {
-    private _statusBar: StatusBar.IStatusBarView;
+export default class FeedbackEmitter implements IFeedbackEmitter {
     constructor(private _messagePanel: any) {
     }
 
-    public set statusBar(sb: StatusBar.IStatusBarView) {
-      this._statusBar = sb;
-    }
-
-    public onResult(result: IExecutionResult, config: IConfiguration) {
+    public onResult(result: IExecutionResult, config: IPluginConfiguration) {
       if (result.success) {
         this.emitSuccessFeedback(result, config);
       } else {
-        this.emitFailureFeedback(result, config);
+        this.emitFailureFeedback(result);
       }
     }
 
-    private emitSuccessFeedback(result: IExecutionResult, config: IConfiguration) {
+    private emitSuccessFeedback(result: IExecutionResult, config: IPluginConfiguration) {
       if (config.showSuccess) {
           this.showSuccess(result.command, result.output);
           if (config.autohideSuccess) {
@@ -44,7 +40,7 @@ export default class FeedbackEmitter {
         setTimeout(() => this._messagePanel.close(), timeout);
     }
 
-    private emitFailureFeedback(result: IExecutionResult, config: IConfiguration) {
+    private emitFailureFeedback(result: IExecutionResult) {
       const { command, output } = result;
       this._messagePanel.clear();
       this._messagePanel.attach();
