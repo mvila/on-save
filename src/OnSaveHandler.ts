@@ -21,12 +21,12 @@ export default class OnSaveHandler {
     constructor(
         private _configurationReader: IConfigurationReader,
         private _commandRunner: ICommandRunner,
-        private _feedbackEmitter: IFeedbackEmitter) {
+        private _feedbackEmitter: IFeedbackEmitter,
+        private _indicatorTile: any) {
     }
 
     public consumeStatusBar(sb: StatusBar.IStatusBarView) {
-        // TODO:
-        // If a save task exists, show an icon with a green check to indicate the save task status.
+        // sb['addRightTile']({item: this._indicatorTile, priority: 0});
     }
 
     public activate() {
@@ -53,7 +53,7 @@ export default class OnSaveHandler {
 
     private execute(command: ISaveCommand, config: IPluginConfiguration, project: string, file: string) {
         return this._commandRunner.run(command, project, file)
-            .then(result => this._feedbackEmitter.onResult(result, config));
+            .then(result => this._feedbackEmitter.onResult(result, config, project, file));
     }
 
     private readConfiguration(projectPath: string): IConfiguration {

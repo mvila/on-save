@@ -12,7 +12,7 @@ import {
 
 export default class CommandRunner implements ICommandRunner {
     public run(command: ISaveCommand, project: string, file: string) {
-        const args = getCommandArguments(command.command, project, file);
+        const args = getCommandArguments(project, file, command.base);
         const resolved = resolveCommand(command.command, args);
         return this.executeShellCommand(resolved, { cwd: project, timeout: EXEC_TIMEOUT });
     }

@@ -22,7 +22,7 @@ export default class ConfigurationReader {
 
   private readCommandsFromFile(filePath: string): IConfiguration {
     const configuration = this.readFileContents(filePath);
-    configuration.commands.map(({watch, command, base}) => new SaveCommand(watch, command, base));
+    configuration.commands = configuration.commands.map(({watch, command, base}) => new SaveCommand(watch, command, base));
     return configuration;
   }
 

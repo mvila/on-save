@@ -1,17 +1,19 @@
 import { IPluginConfiguration } from "../configuration/interfaces";
 import { IExecutionResult } from "../execution/interfaces";
-import { IFeedbackEmitter } from "./interfaces";
+import { IFeedbackEmitter, ISimpleResultHandler } from "./interfaces";
 const PlainMessageView = require("atom-message-panel").PlainMessageView;
 
 export default class FeedbackEmitter implements IFeedbackEmitter {
-    constructor(private _messagePanel: any) {
+    constructor(private _messagePanel: any, private _handlers: ISimpleResultHandler[] = []) {
     }
 
-    public onResult(result: IExecutionResult, config: IPluginConfiguration) {
+    public onResult(result: IExecutionResult, config: IPluginConfiguration, project: string, file: string) {
       if (result.success) {
         this.emitSuccessFeedback(result, config);
+        this._handlers.forEach(h => h.onSuccess(file));
       } else {
         this.emitFailureFeedback(result);
+        this._handlers.forEach(h => h.onFailure(file));
       }
     }
 
