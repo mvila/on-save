@@ -8,38 +8,44 @@ import {
 } from "./configuration/interfaces";
 import { ICommandRunner } from "./execution/interfaces";
 import { IFeedbackEmitter } from "./feedback/interfaces";
-
+import {
+  IInitializable,
+  IDisposable
+} from "./interfaces";
 // TODO: Use TS Imports when Atom Typings are complete
 const { CompositeDisposable } = require("atom");
 
 const CONFIGS_FILENAME = ".on-save.json";
 
 export default class OnSaveHandler {
-    private subscriptions: any;
+    private _subscriptions: any;
     private _statusBar: StatusBar.IStatusBarView;
 
     constructor(
+        private _initializables: IInitializable[],
+        private _disposables: IDisposable[],
         private _configurationReader: IConfigurationReader,
         private _commandRunner: ICommandRunner,
         private _feedbackEmitter: IFeedbackEmitter,
-        private _indicatorTile: any) {
+        private _indicatorTile: any) {        
     }
 
     public consumeStatusBar(statusBar) {
-        this._indicatorTile.initialize();
+        this._initializables.forEach(i => i.initialize());
         this._indicatorTile.registerOnClickHandler(() => this._feedbackEmitter.show());
         statusBar.addRightTile({item: this._indicatorTile, priority: 0});
     }
 
     public activate() {
-        this.subscriptions = new CompositeDisposable();
-        this.subscriptions.add(atom.workspace.observeTextEditors(textEditor => {
-            this.subscriptions.add(textEditor.onDidSave(this.handleDidSave.bind(this)));
+        this._subscriptions = new CompositeDisposable();
+        this._subscriptions.add(atom.workspace.observeTextEditors(textEditor => {
+            this._subscriptions.add(textEditor.onDidSave(this.handleDidSave.bind(this)));
         }));
+        this._disposables.push(this._subscriptions);
     }
 
     public deactivate() {
-        this.subscriptions.dispose();
+        this._disposables.forEach(d => d.dispose());
     }
 
     private handleDidSave(event) {

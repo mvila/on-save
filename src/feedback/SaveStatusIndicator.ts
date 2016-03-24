@@ -1,4 +1,5 @@
 import {ISimpleResultHandler} from "./interfaces";
+import { IActiveItemListener } from "../interfaces";
 const { Disposable } = require("atom");
 const STATUS_UNKNOWN = "save-status-unknown";
 const STATUS_SUCCESS = "save-status-success";
@@ -8,7 +9,7 @@ const STATUS_FAIL = "save-status-failure";
 const saveStatusCache = {};
 
 class SaveStatusIndicator extends HTMLElement implements ISimpleResultHandler {
-    private activeItemSubscription: AtomCore.Disposable;
+    public activeItemListener: IActiveItemListener;
     private clickSubscription: AtomCore.Disposable;
     private saveStatusIcon: HTMLSpanElement;
     private clickHandlers: (() => void)[];
@@ -17,13 +18,12 @@ class SaveStatusIndicator extends HTMLElement implements ISimpleResultHandler {
         this.clickHandlers = [];
         this.classList.add("save-status-indicator");
         this.createSaveStatusIcon();
-        this.activeItemSubscription = atom.workspace.onDidChangeActivePaneItem(this.onActiveItemChanged.bind(this));
-        this.onActiveItemChanged();
+        this.activeItemListener.subscribe(this.onActiveItemChanged.bind(this));
     }
 
     public onSuccess(file: string) {
         saveStatusCache[file] = true;
-        if (file === this.getActiveItemPath()) {
+        if (file === this.activeItemPath) {
             this.saveStatusIcon.classList.remove(STATUS_UNKNOWN, STATUS_FAIL);
             this.saveStatusIcon.classList.add(STATUS_SUCCESS);
         }
@@ -31,14 +31,13 @@ class SaveStatusIndicator extends HTMLElement implements ISimpleResultHandler {
 
     public onFailure(file: string) {
         saveStatusCache[file] = false;
-        if (file === this.getActiveItemPath()) {
+        if (file === this.activeItemPath) {
             this.saveStatusIcon.classList.remove(STATUS_UNKNOWN, STATUS_SUCCESS);
             this.saveStatusIcon.classList.add(STATUS_FAIL);
         }
     }
 
     public destroy() {
-        this.activeItemSubscription.dispose();
         this.clickSubscription.dispose();
     }
 
@@ -46,8 +45,15 @@ class SaveStatusIndicator extends HTMLElement implements ISimpleResultHandler {
         this.clickHandlers.push(handler);
     }
 
-    private onActiveItemChanged() {
-        const file = this.getActiveItemPath();
+    private get activeItemPath(): string {
+        if (this.activeItemListener) {
+          return this.activeItemListener.getActiveItemPath();
+        } else {
+          return null;
+        }
+    }
+
+    private onActiveItemChanged(file) {
         this.saveStatusIcon.classList.remove(STATUS_FAIL, STATUS_SUCCESS, STATUS_UNKNOWN);
         if (!saveStatusCache.hasOwnProperty(file)) {
             this.saveStatusIcon.classList.add(STATUS_UNKNOWN);
@@ -71,17 +77,6 @@ class SaveStatusIndicator extends HTMLElement implements ISimpleResultHandler {
 
     private onIconClicked() {
         this.clickHandlers.forEach(handler => handler());
-    }
-
-    private getActiveItem() {
-        return atom.workspace.getActivePaneItem();
-    }
-
-    private getActiveItemPath() {
-        const activeItem = this.getActiveItem();
-        if (activeItem) {
-            return activeItem && activeItem["getPath"] ? activeItem["getPath"]() : null;
-        }
     }
 }
 

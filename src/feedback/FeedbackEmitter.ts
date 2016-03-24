@@ -2,10 +2,16 @@ import * as path from "path";
 import { IPluginConfiguration } from "../configuration/interfaces";
 import { IExecutionResult } from "../execution/interfaces";
 import { IFeedbackEmitter, ISimpleResultHandler } from "./interfaces";
+import { IActiveItemListener } from "../interfaces";
 const PlainMessageView = require("atom-message-panel").PlainMessageView;
 
 export default class FeedbackEmitter implements IFeedbackEmitter {
-    constructor(private _messagePanel: any, private _handlers: ISimpleResultHandler[] = []) {
+    constructor(
+      private _messagePanel: any,
+      private _handlers: ISimpleResultHandler[] = [],
+      private _activeItemListener: IActiveItemListener
+    ) {
+      _activeItemListener.subscribe(this.onActiveItemChanged.bind(this));
     }
 
     public show() {
@@ -25,6 +31,10 @@ export default class FeedbackEmitter implements IFeedbackEmitter {
             this.emitFailureFeedback(result);
             this._handlers.forEach(h => h.onFailure(absPath));
         }
+    }
+
+    private onActiveItemChanged(file) {
+        this.clear();
     }
 
     private emitSuccessFeedback(result: IExecutionResult, config: IPluginConfiguration) {

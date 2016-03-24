@@ -1,4 +1,5 @@
 import OnSaveHandler from "./src/OnSaveHandler";
+import ActiveItemListener from "./src/ActiveItemListener";
 import ConfigurationReader from "./src/configuration/ConfigurationReader";
 import CommandRunner from "./src/execution/CommandRunner";
 import FeedbackEmitter from "./src/feedback/FeedbackEmitter";
@@ -11,11 +12,15 @@ const messagePanel = new MessagePanelView({
   maxHeight: 100
 });
 const saveStatusIndicator = new SaveStatusIndicator();
+const activeItemListener = new ActiveItemListener();
+saveStatusIndicator.activeItemListener = activeItemListener;
 
 const onSaveModule = new OnSaveHandler(
+  [ activeItemListener, saveStatusIndicator ],
+  [ activeItemListener, saveStatusIndicator ],
   new ConfigurationReader(),
   new CommandRunner(),
-  new FeedbackEmitter(messagePanel, [saveStatusIndicator]),
+  new FeedbackEmitter(messagePanel, [saveStatusIndicator], activeItemListener),
   saveStatusIndicator
 );
 module.exports = onSaveModule;
