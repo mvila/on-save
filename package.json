@@ -1,6 +1,6 @@
 {
   "name": "savey-wavey",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Execute shell commands on save",
   "keywords": [
     "save",
