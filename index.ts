@@ -5,7 +5,11 @@ import FeedbackEmitter from "./src/feedback/FeedbackEmitter";
 import SaveStatusIndicator from "./src/feedback/SaveStatusIndicator";
 const MessagePanelView = require('atom-message-panel').MessagePanelView;
 
-const messagePanel = new MessagePanelView({ title: "Save Scripts", recentMessagesAtTop: true, maxHeight: 100 });
+const messagePanel = new MessagePanelView({
+  title: "Save Scripts",
+  recentMessagesAtTop: true,
+  maxHeight: 100
+});
 const saveStatusIndicator = new SaveStatusIndicator();
 
 const onSaveModule = new OnSaveHandler(

@@ -1,17 +1,20 @@
 import {ISimpleResultHandler} from "./interfaces";
-
+const { Disposable } = require("atom");
 const STATUS_UNKNOWN = "save-status-unknown";
-const STATUS_SUCCESS = "save-status-unknown";
-const STATUS_FAIL = "save-status-unknown";
+const STATUS_SUCCESS = "save-status-success";
+const STATUS_FAIL = "save-status-failure";
 
 // TODO: LRU-ify this thing
 const saveStatusCache = {};
 
 class SaveStatusIndicator extends HTMLElement implements ISimpleResultHandler {
     private activeItemSubscription: AtomCore.Disposable;
+    private clickSubscription: AtomCore.Disposable;
     private saveStatusIcon: HTMLSpanElement;
+    private clickHandlers: (() => void)[];
 
     public initialize() {
+        this.clickHandlers = [];
         this.classList.add("save-status-indicator");
         this.createSaveStatusIcon();
         this.activeItemSubscription = atom.workspace.onDidChangeActivePaneItem(this.onActiveItemChanged.bind(this));
@@ -36,29 +39,38 @@ class SaveStatusIndicator extends HTMLElement implements ISimpleResultHandler {
 
     public destroy() {
         this.activeItemSubscription.dispose();
+        this.clickSubscription.dispose();
+    }
+
+    public registerOnClickHandler(handler) {
+        this.clickHandlers.push(handler);
     }
 
     private onActiveItemChanged() {
         const file = this.getActiveItemPath();
         this.saveStatusIcon.classList.remove(STATUS_FAIL, STATUS_SUCCESS, STATUS_UNKNOWN);
         if (!saveStatusCache.hasOwnProperty(file)) {
-          this.saveStatusIcon.classList.add(STATUS_UNKNOWN);
+            this.saveStatusIcon.classList.add(STATUS_UNKNOWN);
         } else if (saveStatusCache[file]) {
-          this.saveStatusIcon.classList.add(STATUS_SUCCESS);
+            this.saveStatusIcon.classList.add(STATUS_SUCCESS);
         } else {
-          this.saveStatusIcon.classList.add(STATUS_FAIL);
+            this.saveStatusIcon.classList.add(STATUS_FAIL);
         }
     }
 
     private createSaveStatusIcon() {
-        const area = document.createElement("div");
-        area.classList.add("save-status", "inline-block");
-        this.appendChild(area);
-
         const icon = document.createElement("span");
-        icon.classList.add("icon", "icon-check", STATUS_UNKNOWN);
-        area.appendChild(icon);
+        icon.classList.add("icon", "icon-checklist", STATUS_UNKNOWN);
+        this.appendChild(icon);
         this.saveStatusIcon = icon;
+
+        const clickHandler = this.onIconClicked.bind(this);
+        icon.addEventListener("click", clickHandler);
+        this.clickSubscription = new Disposable(() => icon.removeEventListener("click", clickHandler));
+    }
+
+    private onIconClicked() {
+        this.clickHandlers.forEach(handler => handler());
     }
 
     private getActiveItem() {
@@ -67,7 +79,9 @@ class SaveStatusIndicator extends HTMLElement implements ISimpleResultHandler {
 
     private getActiveItemPath() {
         const activeItem = this.getActiveItem();
-        return activeItem && activeItem["getPath"] ? activeItem["getPath"]() : null;
+        if (activeItem) {
+            return activeItem && activeItem["getPath"] ? activeItem["getPath"]() : null;
+        }
     }
 }
 

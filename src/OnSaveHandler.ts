@@ -25,8 +25,10 @@ export default class OnSaveHandler {
         private _indicatorTile: any) {
     }
 
-    public consumeStatusBar(sb: StatusBar.IStatusBarView) {
-        // sb['addRightTile']({item: this._indicatorTile, priority: 0});
+    public consumeStatusBar(statusBar) {
+        this._indicatorTile.initialize();
+        this._indicatorTile.registerOnClickHandler(() => this._feedbackEmitter.show());
+        statusBar.addRightTile({item: this._indicatorTile, priority: 0});
     }
 
     public activate() {
