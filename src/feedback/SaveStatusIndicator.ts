@@ -46,11 +46,7 @@ class SaveStatusIndicator extends HTMLElement implements ISimpleResultHandler {
     }
 
     private get activeItemPath(): string {
-        if (this.activeItemListener) {
-          return this.activeItemListener.getActiveItemPath();
-        } else {
-          return null;
-        }
+        return this.activeItemListener ? this.activeItemListener.activeItemPath : null;
     }
 
     private onActiveItemChanged(file) {

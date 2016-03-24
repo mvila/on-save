@@ -27,7 +27,7 @@ export default class OnSaveHandler {
         private _configurationReader: IConfigurationReader,
         private _commandRunner: ICommandRunner,
         private _feedbackEmitter: IFeedbackEmitter,
-        private _indicatorTile: any) {        
+        private _indicatorTile: any) {
     }
 
     public consumeStatusBar(statusBar) {

@@ -8,6 +8,6 @@ export interface IDisposable {
 
 export interface IActiveItemListener extends IInitializable, IDisposable {
   subscribe(handler: (file: string) => void);
-  getActiveItem(): any;
-  getActiveItemPath(): string;
+  activeItem: AtomCore.IPane;
+  activeItemPath: string;
 }

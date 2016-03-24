@@ -15,7 +15,7 @@ export default class ActiveItemListener implements IInitializable {
     }
 
     private onActiveItemChanged() {
-        const file = this.getActiveItemPath();
+        const file = this.activeItemPath;
         this._listeners.forEach(l => l(file));
     }
 
@@ -23,14 +23,16 @@ export default class ActiveItemListener implements IInitializable {
         this._activeItemSubscription.dispose();
     }
 
-    public getActiveItem() {
+    public get activeItem() {
         return atom.workspace.getActivePaneItem();
     }
 
-    public getActiveItemPath() {
-        const activeItem = this.getActiveItem();
+    public get activeItemPath() {
+        const activeItem = this.activeItem;
         if (activeItem) {
             return activeItem && activeItem["getPath"] ? activeItem["getPath"]() : null;
+        } else {
+          return null;
         }
     }
 }
