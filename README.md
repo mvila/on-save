@@ -1,60 +1,55 @@
-<p align="center">
-  <br />
-  <br />
-  <img src="https://s3.amazonaws.com/on-save/on-save-logo-with-tagline.svg" alt="on-save: Run a shell command when you save a file" width="451" height="65" />
-  <br />
-</p>
+[![Build Status](https://travis-ci.org/darthtrevino/savey-wavey.svg?branch=master)](https://travis-ci.org/darthtrevino/savey-wavey)
+[![Dependencies](https://david-dm.org/darthtrevino/savey-wavey.svg)](https://david-dm.org/darthtrevino/savey-wavey)
+[![Code Climate](https://codeclimate.com/github/darthtrevino/savey-wavey/badges/gpa.svg)](https://codeclimate.com/github/darthtrevino/savey-wavey)
+[![Test Coverage](https://codeclimate.com/github/darthtrevino/savey-wavey/badges/coverage.svg)](https://codeclimate.com/github/darthtrevino/savey-wavey/coverage)
+[![Issue Count](https://codeclimate.com/github/darthtrevino/savey-wavey/badges/issue_count.svg)](https://codeclimate.com/github/darthtrevino/savey-wavey)
 
-## Installation
+# savey-wavey
 
-```
-apm install on-save
-```
+`apm install savey-wavey`
+
+An atom plugin for triggering shell scripts on save events.
 
 ## Usage
-
 Create an `.on-save.json` file at the root of you project.
 
 For example, if you want to babelify every `.js` file from `src` to `lib`:
 
 ```javascript
-[
-  {
-    "srcDir": "src",
-    "destDir": "lib",
-    "files": "**/*.js",
-    "command": "babel ${srcFile} --out-file ${destFile}"
-  }
-]
+{
+  "commands": [
+    {
+      "watch": "src/**/*.js",
+      "base": "src",
+      "command": "./node_modules/.bin/babel ${path} --out-file libs/${dir}/${name}.js"
+    }
+  ],
+  "config": <optional configuration options>
+}
 ```
 
-In case your Babel CLI is local, maybe you would do something like this:
+### Interpolated Variables
+Example: `/Users/me/projects/domination/src/widgets/x.js`
 
+* **project**: The root path of the project (e.g. `/Users/me/projects/domination`)
+* **path**: The path of the file relative to your project. (e.g. `src/widgets/x.js`)
+* **path_abs**: The absolute path of the changed file (e.g. `/Users/me/projects/domination/src/widgets/x.js`)
+* **ext**: The extension of the changed file: (e.g. `.js`)
+* **name**: The base filename, without extension, of the changed file: (e.g. `x`)
+* **dir**: The directory of the file relative to either the baseDir option or the rootPath if no baseDir option is present (e.g. `stuff`)
+
+### Configuration Options
 ```javascript
-[
-  {
-    "srcDir": "src",
-    "destDir": "lib",
-    "files": "**/*.js",
-    "command": "./node_modules/.bin/babel ${srcFile} --out-file ${destFile}"
+{
+  commands: [<your command definitions>],
+  config: {
+    showSuccess: true;
+    autohideSuccess: true;
+    autohideSuccessTimeout: 1200;
   }
-]
+}
 ```
-
-Finally, if you use [nvm](https://github.com/creationix/nvm) for your Node installation you would probably need a package like [000-project-shell-env](https://atom.io/packages/000-project-shell-env).
-
-## Configuration file
-
-To use **on-save**, create an `.on-save.json` file at the root of your project. The content should be an array containing objects with the following properties:
-
-- `srcDir` *(default: `'.'`)*: The source directory.
-- `destDir` *(default: `'.'`)*: The destination directory.
-- `files`: The files you want to track. You can use a glob, see [minimatch](https://github.com/isaacs/minimatch).
-- `command`: The command to execute. You can use these variables:
-  - `${srcFile}`: The input file.
-  - `${destFile}`: The output file.
-  - `${destFileWithoutExtension}`: The output file without the extension.
-
-## License
-
-MIT
+#### Options
+* **showSuccess** (default = true) - If true, shows script success in a nested view
+* **autohideSuccess** (default = true) - If true, autohides successful scripts after a timeout period.
+* **autohideSuccessTimeout** (default = 1200) - The default timeout in ms, after which the success results will be autohidden.

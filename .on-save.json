@@ -1,0 +1,8 @@
+{
+  "commands": [
+    {
+      "watch": ".on-save.json",
+      "command": "node ./test/testscript.js"
+    }
+  ]
+}

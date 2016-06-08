@@ -1,0 +1,15 @@
+{
+  "commands": [
+    {
+      "watch": "client/**/*.jade",
+      "command": "./node_modules/.bin/jade ${path}"
+    },
+    {
+      "watch": "**/*.es6",
+      "command": "./node_modules/.bin/babel --source-map=true ${path} --out-file=${dir}/${name}.js"
+    },
+    {
+      "watch": "client/**/*.{scss,sass}",
+      "command": "./node_modules/.bin/node-sass --output-style compressed client/styles/main.scss -o client/styles"
+    }
+  ]

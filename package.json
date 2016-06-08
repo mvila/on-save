@@ -1,7 +1,7 @@
 {
-  "name": "on-save",
-  "version": "0.2.9",
-  "description": "Run a shell command when you save a file",
+  "name": "savey-wavey",
+  "version": "0.1.5",
+  "description": "Execute shell commands on save",
   "keywords": [
     "save",
     "file",
@@ -15,13 +15,52 @@
     "execute",
     "shell"
   ],
-  "repository": "https://github.com/mvila/on-save",
+  "contributors": [
+    {
+      "name": "Chris Trevino",
+      "url": "www.github.com/darthtrevino"
+    },
+    {
+      "name": "Manuel Vila",
+      "url": "https://github.com/mvila"
+    }
+  ],
+  "scripts": {
+    "postinstall": "typings install && tsc",
+    "lint": "tslint -c tslint.json src/**/*.ts test/**/*.ts",
+    "mocha": "istanbul test _mocha -- 'test/**/*.spec.js'",
+    "report-coverage": "codeclimate-test-reporter < coverage/lcov.info",
+    "test": "npm run lint && npm run mocha --coverage && npm run report-coverage"
+  },
+  "main": "index.js",
+  "repository": {
+    "url": "https://github.com/darthtrevino/savey-wavey"
+  },
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
   "dependencies": {
+    "atom-message-panel": "^1.2.4",
+    "bluebird": "^3.4.0",
+    "debug": "^2.2.0",
+    "lodash": "^4.13.1",
     "minimatch": "^3.0.0",
-    "mkdirp": "^0.5.1"
+    "typescript": "^1.8.10",
+    "typings": "^1.0.4"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "codeclimate-test-reporter": "^0.3.2",
+    "istanbul": "^0.4.3",
+    "mocha": "^2.5.3",
+    "tslint": "^3.10.2"
+  },
+  "consumedServices": {
+    "status-bar": {
+      "versions": {
+        "^1.0.0": "consumeStatusBar"
+      }
+    }
   }
 }
