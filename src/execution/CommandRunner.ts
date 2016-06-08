@@ -23,7 +23,7 @@ export default class CommandRunner implements ICommandRunner {
           const executionOptions = {
             cwd: project,
             timeout: EXEC_TIMEOUT,
-            env: _.merge(process.env, { PATH: process.env.PATH + ":/usr/local/bin" })
+            env: process.env
           };
           exec(command, executionOptions, (err, stdout, stderr) => {
               if (err) {
