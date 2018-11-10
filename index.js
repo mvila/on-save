@@ -68,8 +68,7 @@ export default {
         files,
         command,
         showOutput = false,
-        showError = false,
-		implementsBusySignal = false,
+        showError = false
     }) {
         if (!files) {
             throw new Error('on-save: \'files\' property is missing in \'.on-save.json\' configuration file');
@@ -86,8 +85,7 @@ export default {
             files,
             command,
             showOutput,
-            showError,
-			implementsBusySignal
+            showError
         };
     },
 
@@ -125,10 +123,10 @@ export default {
             timeout: EXEC_TIMEOUT
         };
 
-		this.busySignal.on()
+	this.busySignal.on()
         exec(command, options, (err, stdout, stderr) => {
 
-			this.busySignal.off();
+	    this.busySignal.off();
             const message = 'on-save';
 
             const output = stdout.trim();
