@@ -104,8 +104,11 @@ export default {
     });
 
     const options = {cwd: rootDir, timeout: EXEC_TIMEOUT};
+	this.busySignal.on()
 
     exec(command, options, (err, stdout, stderr) => {
+      this.busySignal.off()
+
       const message = 'on-save';
 
       const output = stdout.trim();
@@ -127,5 +130,18 @@ export default {
       command = command.replace(regExp, value);
     }
     return command;
+  },
+
+  consumeSignal(registry) {
+    const provider = registry.create();
+    this.subscriptions.add(provider)
+    this.busySignal = {
+      on(){
+        provider.add("Executing Save Commands")
+      },
+      off(){
+        provider.remove("Executing Save Commands");
+	  }
+    }
   }
 };
