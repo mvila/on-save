@@ -110,7 +110,7 @@ export default {
 
       const output = stdout.trim();
       if (config.showOutput && output) {
-        atom.notifications.addSuccess(message, {detail: output, dismissable: true});
+        atom.notifications.addSuccess(message, {detail: output, dismissable: false});
       }
 
       const error = stderr.trim() || (err && err.message);
